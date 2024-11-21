@@ -1640,6 +1640,15 @@ func (s *InboundService) ResetAllClientTraffics(id int) error {
 	return err
 }
 
+func (s *InboundService) ResetInboundTraffics(id int) error {
+	logger.Info("InboundService ResetInboundTraffics ", id)
+	return database.GetDB().
+		Model(model.Inbound{}).
+		Where("id = ?", id).
+		Updates(map[string]interface{}{"up": 0, "down": 0}).
+		Error
+}
+
 func (s *InboundService) ResetAllTraffics() error {
 	db := database.GetDB()
 

@@ -20,6 +20,14 @@ const (
 	WireGuard   Protocol = "wireguard"
 )
 
+type ResetTrafficType string
+
+const (
+	Hourly  ResetTrafficType = "hourly"
+	Daily   ResetTrafficType = "daily"
+	Monthly ResetTrafficType = "monthly"
+)
+
 type User struct {
 	Id          int    `json:"id" gorm:"primaryKey;autoIncrement"`
 	Username    string `json:"username"`
@@ -47,6 +55,16 @@ type Inbound struct {
 	Tag            string   `json:"tag" form:"tag" gorm:"unique"`
 	Sniffing       string   `json:"sniffing" form:"sniffing"`
 	Allocate       string   `json:"allocate" form:"allocate"`
+	AdminExt       string   `json:"adminExt" form:"adminExt"`
+}
+
+type InboundAdminExt struct {
+	AutoResetInfo AutoResetInfo `json:"autoResetInfo"`
+}
+
+type AutoResetInfo struct {
+	AutoResetTraffic          ResetTrafficType `json:"autoResetTraffic"`
+	AutoResetAllClientTraffic ResetTrafficType `json:"autoResetAllClientTraffic"`
 }
 
 type OutboundTraffics struct {

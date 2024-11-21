@@ -293,6 +293,9 @@ func (s *Server) startTask() {
 	} else {
 		s.cron.Remove(entry)
 	}
+
+	// auto reset traffic
+	_, _ = s.cron.AddJob("@every 30s", job.NewResetTrafficJob())
 }
 
 func (s *Server) Start() (err error) {
